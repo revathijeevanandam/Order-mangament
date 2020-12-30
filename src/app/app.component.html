@@ -1,88 +1,209 @@
-<form [formGroup]="addUserForm" (ngSubmit)="submitUser()">
+<mat-toolbar>
+  <span>Order Details</span>
+</mat-toolbar>
 
-  <div style="padding-top: 10%; width: 80%;padding-left: 15%;">
-    <!-- Name control -->
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label"><span class="required-asterisk">*</span>Name</label>
-        <div class="col-sm-10">
-
-            <input type="text" formControlName="name" class="form-control" placeholder="Enter name"
-            [ngClass]="{ 'is-invalid': (isFormSubmitted && addUserForm.controls.name.errors) || (!addUserForm.controls.name.pristine && addUserForm.controls.name.invalid) }">
-
-           <!-- Validation messages -->
-           <div class="invalid-feedback"
-            *ngIf="(isFormSubmitted && addUserForm.controls.name.errors) || (!addUserForm.controls.name.pristine && addUserForm.controls.name.invalid)">
-            <div *ngIf="addUserForm.controls.name.errors.required">Name is required</div>
-            <div *ngIf="addUserForm.controls.name.errors.pattern">Only Alphabets with space
-                between 2 to
-                20
-                characters
-              </div>
+<div class="pt-5">
+  <div class="container border">
+    <div class="row" style="text-align: center;">
+      <div class="col">
+        <div class="row">
+          <div class="col pt-2">
+            <mat-label class="mat-display-1">Add New Order</mat-label>
           </div>
         </div>
-    </div>
-
-    <!-- Email control -->
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">*Email</label>
-        <div class="col-sm-10">
-
-            <input type="text" formControlName="email" class="form-control" placeholder="Enter email"
-            [ngClass]="{ 'is-invalid': (isFormSubmitted && addUserForm.controls.email.errors) || (!addUserForm.controls.email.pristine && addUserForm.controls.email.invalid) }">
-
-          <!-- Validation messages -->
-          <div class="invalid-feedback"
-            *ngIf="(isFormSubmitted && addUserForm.controls.email.errors) || (!addUserForm.controls.email.pristine && addUserForm.controls.email.invalid)">
-            <div *ngIf="addUserForm.controls.email.errors.required">Email is required</div>
-            <div *ngIf="addUserForm.controls.email.errors.pattern">Enter valid email</div>
-
+      {{today}}
+        <div class="row">
+          <div class="col pt-5">
+            <mat-label class="pr-5 font">User</mat-label>
+            <mat-form-field appearance="fill" class="user_value">
+              <mat-label>User name</mat-label>
+              <mat-select [(ngModel)]="selecteduser" name="username">
+                <mat-option *ngFor="let username of username" [value]="username.value">
+                  {{username.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
-    </div>
-
-    <!-- Address control -->
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">*Address</label>
-        <div class="col-sm-10">
-
-            <textarea class="form-control" formControlName="address" placeholder="Enter address" rows="3"
-            [ngClass]="{ 'is-invalid': (isFormSubmitted && addUserForm.controls.address.errors) || (!addUserForm.controls.address.pristine && addUserForm.controls.address.invalid) }"></textarea>
-
-          <!-- Validation messages -->
-          <div class="invalid-feedback"
-            *ngIf="(isFormSubmitted && addUserForm.controls.address.errors) || (!addUserForm.controls.address.pristine && addUserForm.controls.address.invalid)">
-            <div *ngIf="addUserForm.controls.address.errors.required">Address is required</div>
-
+      
+        <div class="row">
+          <div class="col pt-2">
+            <mat-label class="pr-4 font">Product</mat-label>
+            <mat-form-field appearance="fill">
+              <mat-label>Drinks</mat-label>
+              <mat-select [(ngModel)]="selectedfood" name="food">
+                <mat-option *ngFor="let food of foods" [value]="food.value">
+                  {{food.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
-    </div>
-
-    <!-- Password control -->
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">*Password</label>
-        <div class="col-sm-10">
-
-            <input type="password" formControlName="password" class="form-control" placeholder="Enter password"
-            [ngClass]="{ 'is-invalid': (isFormSubmitted && addUserForm.controls.password.errors) || (!addUserForm.controls.password.pristine && addUserForm.controls.password.invalid) }">
-
-          <!-- Validation messages -->
-          <div class="invalid-feedback"
-            *ngIf="(isFormSubmitted && addUserForm.controls.password.errors) || (!addUserForm.controls.password.pristine && addUserForm.controls.password.invalid)">
-            <div *ngIf="addUserForm.controls.password.errors.required">Password is required</div>
-            <div *ngIf="addUserForm.controls.password.errors.minlength">Minimum 8 characters required</div>
+      
+        <div class="row">
+          <div class="col pt-2">
+            <mat-label class="pr-3 font">Quantity</mat-label>
+            <input type="number"  [(ngModel)]="Quantity" class="inputvalue out">
           </div>
         </div>
+      
+        <div class="row">
+          <div class="col pt-3 ml-5 pb-3">
+            <button (click)="add()" mat-button class="out btn btn-secondary">Add</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <br><br>
+  <div class="container border pt-2">
+    <div class="row pl-5">
+      <div class="col">
+        <div class="row">
+          <div class="col pt-2">
+            <mat-label class="font">search</mat-label>
+          </div>
+        </div>
 
-    <div class="form-group text-center">
-       <!-- Dynamic text of submit button -->
-        <button type="submit" class="btn btn-success btn-sm">sumbit</button>
+        <div class="row">
+          <div class="col pt-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Search</mat-label>
+              <mat-select [(ngModel)]="selectedsearch" (ngModelChange)="fn(selectedsearch)" name="search">
+                <mat-option *ngFor="let search of search" [value]="search.value">
+                  {{search.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+          </div>
 
-        <!-- Cancel button is shown when User is in edit mode -->
-        <!-- <a type="submit" class="btn btn-danger btn-sm" (click)="closeModal('close')"
-        *ngIf="urlParams">Cancel</a> -->
+          <div class="col d-flex align-items-center">
+            <input type="text"  [(ngModel)]="searchText" class="inputvalue out" placeholder="enter search term...">
+          </div>
+
+          <div class="col d-flex align-items-center pt-2">
+            <button (click)="searchfn(searchText)" mat-button class="out out1 btn btn-secondary">Search</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <br><br>
+  <div class="container pt-2">
+    <div class="row">
+      <table class="table table-striped border">
+        <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of selected">
+            <th>{{order.user}}</th>
+            <td>{{order.product}}</td>
+            <td>{{order.price}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.date}}</td>
+            <td class="delete"><span (click)="delete(order.product)">Delete</span></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+  <!-- all time -->
+  <!-- last 7 days -->
+  <!-- <div *ngIf="selectedsearch == 'Last 7 days'"> 
+  <div   class="container pt-2">
+    <div class="row">
+      <table class="table table-striped border">
+        <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of table">
+            <th>{{order.user}}</th>
+            <td>{{order.product}}</td>
+            <td>{{order.price}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.date}}</td>
+            <td class="delete"><span (click)="edit(order.product)">Edit</span> &nbsp; &nbsp;<span (click)="delete(order.product)">Delete</span></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br> -->
 
+
+  <!-- last7days -->
+<!-- today -->
+<!-- <div *ngIf="selectedsearch == 'Today'"> 
+  <div   class="container pt-2">
+    <div class="row">
+      <table class="table table-striped border">
+        <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of table">
+            <th>{{order.user}}</th>
+            <td>{{order.product}}</td>
+            <td>{{order.price}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.date}}</td>
+            <td class="delete"><span (click)="edit(order.product)">Edit</span> &nbsp; &nbsp;<span (click)="delete(order.product)">Delete</span></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br> -->
+
+<!-- today -->
+
+
+  <div class="container pt-1">
+    <div class="row ">
+      <nav class="ml-auto">
+        <ul class="pagination pagination-md">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">1</a>
+          </li>
+          <li class="page-item text-secondary"><a class="page-link color" href="#">2</a></li>
+          <li class="page-item "><a class="page-link color" href="#">3</a></li>
+        </ul>
+      </nav>
+    </div>
   </div>
 
-</form>
+</div>

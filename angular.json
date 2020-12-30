@@ -24,9 +24,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -88,6 +91,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "simplepjt"
+    }
+  },
+  "defaultProject": "simplepjt",
+  "cli": {
+    "analytics": "91966b4d-d4c6-4a01-9de2-1b02a53770a1"
+  }
 }
